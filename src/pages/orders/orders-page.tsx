@@ -1,0 +1,16 @@
+import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { ChevronDown, PackageCheck, ShoppingBag, Truck } from 'lucide-react'
+import type { OrderRecord } from '@/types/domain/order'
+import { products } from '@/data/products'
+import { formatPrice } from '@/lib/format'
+
+function loadOrders(): OrderRecord[] {
+  try { const value: unknown = JSON.parse(localStorage.getItem('nava-orders-v1') ?? '[]'); return Array.isArray(value) ? value as OrderRecord[] : [] } catch { return [] }
+}
+
+export function OrdersPage() {
+  const [orders] = useState(loadOrders)
+  const reversedOrders = useMemo(() => [...orders].sort((a, b) => b.createdAt.localeCompare(a.createdAt)), [orders])
+  return <main className="shell page-space orders-page"><div className="page-title-row"><div><p className="eyebrow">حساب نمایشی نوا</p><h1>سفارش‌های من</h1><p>سفارش‌ها فقط در همین مرورگر ذخیره می‌شوند.</p></div><PackageCheck size={25} className="page-title-icon"/></div>{reversedOrders.length ? <div className="orders-list">{reversedOrders.map((order) => <details className="order-card" key={order.id}><summary><span className="order-icon"><ShoppingBag size={18}/></span><span className="order-summary-id"><small>شماره سفارش</small><b>{order.id}</b></span><span><small>تاریخ ثبت</small><b>{new Intl.DateTimeFormat('fa-IR', { dateStyle: 'medium' }).format(new Date(order.createdAt))}</b></span><span><small>مبلغ نهایی</small><b>{formatPrice(order.total)}</b></span><span className="order-status"><i/>ثبت نمایشی</span><span className="order-expand"><ChevronDown size={17}/></span></summary><div className="order-details"><div className="order-progress"><span className="progress-step active"><i>۱</i>ثبت سفارش</span><span className="progress-line"/><span className="progress-step"><i>۲</i>آماده‌سازی</span><span className="progress-line"/><span className="progress-step"><i>۳</i>تحویل</span></div><div className="order-info-grid"><div><small>تحویل‌گیرنده</small><b>{order.fullName}</b></div><div><small>شماره تماس</small><b>{order.mobile}</b></div><div><small>نشانی</small><b>{order.city}، {order.address}</b></div><div><small>روش پرداخت</small><b>{order.paymentMethod === 'online-demo' ? 'پرداخت آنلاین نمایشی' : 'پرداخت هنگام تحویل'}</b></div></div><div className="order-product-list">{order.items.map((line) => { const product = products.find((item) => item.id === line.productId); if (!product) return null; return <div className="order-product" key={line.productId}><span className={`order-product-art product-image--${product.visualTone}`}>{product.image ? <img src={product.image} alt=""/> : product.visual}</span><span><b>{product.title}</b><small>{line.quantity.toLocaleString('fa-IR')} عدد · فروشنده {product.seller.name}</small></span><strong>{formatPrice(product.price * line.quantity)}</strong></div> })}</div>{order.discount > 0 && <p className="order-discount">تخفیف کد نوا: − {formatPrice(order.discount)}</p>}<p className="demo-payment-warning"><Truck size={14}/> این وضعیت فقط نمایشی است و هیچ کالایی ارسال نمی‌شود.</p></div></details>)}</div> : <div className="empty-results"><span><ShoppingBag size={34}/></span><h2>هنوز سفارشی ثبت نکرده‌ای</h2><p>بعد از ثبت یک سفارش آزمایشی، جزئیات آن اینجا می‌ماند.</p><Link to="/products" className="button button-primary">دیدن محصولات</Link></div>}</main>
+}
