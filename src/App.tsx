@@ -13,7 +13,9 @@ import { ProductsPage } from '@/pages/products'
 import { OffersPage } from '@/pages/offers'
 import { SellerDetailPage } from '@/pages/seller-detail'
 import { OrdersPage } from '@/pages/orders'
+import { CampaignsPage } from '@/pages/campaigns'
+import { CampaignDetailPage } from '@/pages/campaign-detail'
 
 export default function App() {
-  return <BrowserRouter><ShopProvider><Routes><Route element={<StoreLayout/>}><Route index element={<HomePage/>}/><Route path="products" element={<ProductsPage/>}/><Route path="products/:slug" element={<ProductDetailPage/>}/><Route path="offers" element={<OffersPage/>}/><Route path="sellers/:sellerName" element={<SellerDetailPage/>}/><Route path="account/orders" element={<OrdersPage/>}/><Route path="cart" element={<CartPage/>}/><Route path="checkout" element={<CheckoutPage/>}/><Route path="wishlist" element={<WishlistPage/>}/><Route path="compare" element={<ComparePage/>}/><Route path="order-success" element={<OrderSuccessPage/>}/><Route path="*" element={<NotFoundPage/>}/></Route></Routes></ShopProvider></BrowserRouter>
+  return <BrowserRouter><ShopProvider><Routes><Route element={<StoreLayout/>}><Route index element={<HomePage/>}/><Route path="products" element={<ProductsPage/>}/><Route path="products/:slug" element={<ProductDetailPage/>}/><Route path="offers" element={<OffersPage/>}/><Route path="campaigns" element={<CampaignsPage/>}/><Route path="campaigns/:slug" element={<CampaignDetailPage/>}/><Route path="sellers/:sellerName" element={<SellerDetailPage/>}/><Route path="account/orders" element={<OrdersPage/>}/><Route path="cart" element={<CartPage/>}/><Route path="checkout" element={<CheckoutPage/>}/><Route path="wishlist" element={<WishlistPage/>}/><Route path="compare" element={<ComparePage/>}/><Route path="order-success" element={<OrderSuccessPage/>}/><Route path="*" element={<NotFoundPage/>}/></Route></Routes></ShopProvider></BrowserRouter>
 }
