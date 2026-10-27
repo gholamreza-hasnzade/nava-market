@@ -238,3 +238,16 @@
   .campaign-trust-note>a{font-size:8px}
   .product-savings,.purchase-savings{font-size:8px}
 }
+
+/* Product specifications: strict label/value rows, never two properties sharing a line */
+.specification-table{display:table!important;width:100%;table-layout:fixed;border:1px solid #e5e9f0;border-collapse:separate;border-spacing:0;border-radius:12px;overflow:hidden;background:#fff}
+.specification-table tbody{display:table-row-group}
+.specification-table tr{display:table-row}
+.specification-table th,.specification-table td{display:table-cell;min-height:0;padding:16px 20px;border-bottom:1px solid #e9edf2;text-align:right;vertical-align:middle;font-size:13px;line-height:1.9;overflow-wrap:anywhere}
+.specification-table th{width:clamp(160px,19%,260px);background:#f7f8fb;color:#67758b;font-weight:600}
+.specification-table td{background:#fff;color:#34435d;font-weight:600}
+.specification-table tr:nth-child(even) th{background:#f1f4f8}
+.specification-table tr:nth-child(even) td{background:#fbfcfd}
+.specification-table tr:last-child th,.specification-table tr:last-child td{border-bottom:0}
+.specification-table a{color:#4d6999;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:760px){.specification-table th,.specification-table td{padding:10px 9px;font-size:9px}.specification-table th{width:110px}.specification-heading{align-items:flex-start}.specification-heading>span{white-space:nowrap}}
